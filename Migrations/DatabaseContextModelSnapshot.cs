@@ -216,8 +216,9 @@ namespace YtmoviesApi.Migrations
 
             modelBuilder.Entity("YtmoviesApi.Model.TokenInfo", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("RefreshToken")
                         .IsRequired()

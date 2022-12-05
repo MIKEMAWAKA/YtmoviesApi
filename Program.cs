@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using YtmoviesApi.Model.Domain;
 using System.Text;
+using YtmoviesApi.Repository.Domain;
+using YtmoviesApi.Repository.Abstract;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +23,12 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 
 );
 
+//For identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DatabaseContext>()
     .AddDefaultTokenProviders();
 
+//Adding Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -52,7 +56,7 @@ builder.Services.AddAuthentication(options =>
      };
  });
 
-
+builder.Services.AddTransient<ITokenService, TokenService>();
 
 var app = builder.Build();
 
@@ -64,6 +68,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(
+    options => options.WithOrigins("*")
+    .AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+
+
+    );
+
+
 app.UseAuthentication();
 
 app.UseAuthorization();

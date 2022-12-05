@@ -11,7 +11,7 @@ using YtmoviesApi.Model.Domain;
 namespace YtmoviesApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221204125148_Init")]
+    [Migration("20221205130552_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,8 +218,9 @@ namespace YtmoviesApi.Migrations
 
             modelBuilder.Entity("YtmoviesApi.Model.TokenInfo", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("RefreshToken")
                         .IsRequired()
